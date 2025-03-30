@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EchoNote-Speech and Text Converter</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-image: url('voice to text img.png'); /* Replace with your image path */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>EchoNote-Speech and Text Converter</h1>
+    <div>
+        <button onclick="startListening()">Speak</button>
+    </div>
+    <div>
+        <textarea id="prompt" rows="4" cols="50"></textarea>
+    </div>
+    <div>
+        <button onclick="ask()">Ask</button>
+    </div>
+    <div>
+        <p id="bot-response"></p>
+    </div>
+    
+    <script src="script.js"></script>
+    <script>
+        function startListening() {
+            var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.onresult = function(event) {
+                document.getElementById('prompt').value = event.results[0][0].transcript;
+            };
+            recognition.start();
+        }
+
+        function ask() {
+            var prompt = document.getElementById('prompt').value;
+            if (prompt.trim() !== '') {
+                // Simulating chatbot response (since there's no backend)
+                var botResponse = "I am a simple generator. You said: " + prompt;
+
+                document.getElementById('bot-response').innerHTML = botResponse;
+
+                var synth = window.speechSynthesis;
+                var utterance = new SpeechSynthesisUtterance(botResponse);
+                synth.speak(utterance);
+            }
+        }
+    </script>
+</body>
+</html>
